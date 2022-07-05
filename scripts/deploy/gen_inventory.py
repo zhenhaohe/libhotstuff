@@ -23,14 +23,17 @@ if __name__ == "__main__":
     machines = sorted(set([pub_ip for (pub_ip, _) in replicas] + clients))
     print("\n".join(machines))
     print("\n[nodes]")
+    host_idx = 0
     for (i, (pub_ip, priv_ip)) in enumerate(replicas):
-        host_idx = host_idx_count.setdefault(pub_ip, 0)
-        host_idx_count[pub_ip] += 1
+        # host_idx = host_idx_count.setdefault(pub_ip, 0)
+        # host_idx_count[pub_ip] += 1
+        host_idx +=1
         print("replica{} ansible_host={} host_idx={} extra_conf={}-sec{}.conf".format(
                 i, pub_ip, host_idx, args.prefix, i))
 
     print("\n[clients]")
     for (i, ip) in enumerate(clients):
-        host_idx = host_idx_count.setdefault(pub_ip, 0)
-        host_idx_count[pub_ip] += 1
+        # host_idx = host_idx_count.setdefault(pub_ip, 0)
+        # host_idx_count[pub_ip] += 1
+        host_idx +=1
         print("client{} ansible_host={} host_idx={} cid={}".format(i, ip, host_idx, i))

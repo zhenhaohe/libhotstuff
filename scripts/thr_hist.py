@@ -3,6 +3,7 @@ import re
 import argparse
 import numpy as np
 from datetime import datetime, timedelta
+from statistics import mean
 
 def remove_outliers(x, outlierConstant = 1.5):
     a = np.array(x)
@@ -67,8 +68,11 @@ if __name__ == '__main__':
         cnt += 1
     values.append(cnt)
     print(values)
-    print("lat = {:.3f}ms".format(sum(lats) / len(lats) * 1e3))
+    del values[0]
+    del values[len(values)-1]
+    print("avg_thoughput = {:.3f} ops".format(mean(values)))
+    print("lat = {:.3f} ms".format(sum(lats) / len(lats) * 1e3))
     lats, _ = remove_outliers(lats)
-    print("lat = {:.3f}ms".format(sum(lats) / len(lats) * 1e3))
+    print("lat = {:.3f} ms".format(sum(lats) / len(lats) * 1e3))
     if args.plot:
         plot_thr(args.output)
